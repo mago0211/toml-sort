@@ -81,10 +81,10 @@ def validate_and_copy(
     target[key] = data.pop(key)
 
 
-def load_pyproject() -> TOMLDocument:
+def load_pyproject(pyproject_file: str = "pyproject.toml") -> TOMLDocument:
     """Load pyproject file, and return tool.tomlsort section."""
     try:
-        with open("pyproject.toml", encoding="utf-8") as file:
+        with open(pyproject_file, encoding="utf-8") as file:
             content = file.read()
     except OSError:
         return tomlkit.document()
@@ -228,6 +228,14 @@ Notes:
         help="overwrite the original input file with changes",
         action="store_true",
     )
+    parser.add_argument(
+        "-c",
+        "--config",
+        help="Path to the `pyproject.toml` file to use for configuration "
+        "(default: pyproject.toml)",
+        type=str,
+        default="pyproject.toml",
+    )
     sort = parser.add_argument_group("sort", "change sorting behavior")
     sort.add_argument(
         "-I",
@@ -368,7 +376,8 @@ def cli(  # pylint: disable=too-many-branches,too-many-locals
     arguments: Optional[List[str]] = None,
 ) -> None:
     """Toml sort cli implementation."""
-    settings = load_pyproject()
+    pre_parse = get_parser({}).parse_args(args=arguments)
+    settings = load_pyproject(pre_parse.config)
     configuration = parse_config(settings)
     configuration_overrides = parse_config_overrides(settings)
     args = get_parser(configuration).parse_args(
