@@ -33,7 +33,7 @@ This project can be used as either a command line utility or a Python library. R
 
 ```console
 $ toml-sort --help
-usage: toml-sort [-h] [--version] [-o OUTPUT] [-i] [-I] [-a] [--no-sort-tables] [--sort-table-keys]
+usage: toml-sort [-h] [--version] [-o OUTPUT] [-i] [-c CONFIG] [-I] [-a] [--no-sort-tables] [--sort-table-keys]
                  [--sort-inline-tables] [--sort-inline-arrays] [--sort-first KEYS] [--no-header] [--no-comments]
                  [--no-header-comments] [--no-footer-comments] [--no-inline-comments] [--no-block-comments]
                  [--spaces-before-inline-comment {1,2,3,4}] [--spaces-indent-inline-array {2,4,6,8}]
@@ -51,6 +51,8 @@ optional arguments:
   -o OUTPUT, --output OUTPUT
                         output filepath (default: '-')
   -i, --in-place        overwrite the original input file with changes
+  -c CONFIG, --config CONFIG
+                        Path to the `pyproject.toml` file to use for configuration (default: pyproject.toml)
   --check               silently check if an original file would be changed by the formatter
 
 sort:
